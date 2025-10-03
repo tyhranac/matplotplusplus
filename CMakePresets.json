@@ -7,6 +7,23 @@
   },
   "configurePresets": [
     {
+      "name": "plugin",
+      "displayName": "Build for UE plugin",
+      "description": "Build for UE plugin (must exactly match UE build type, platform, toolset -- update to what your UE version is using)",
+      "binaryDir": "${sourceDir}/build/plugin",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "toolset": "v143,version=14.33",
+      "cacheVariables": {
+        "MATPLOTPP_BUILD_EXAMPLES": "OFF",
+        "MATPLOTPP_BUILD_TESTS": "OFF",
+        "BUILD_SHARED_LIBS": "OFF",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "OFF",
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION": "10.0.19041.0"
+      }
+    },
+    {
       "name": "dev",
       "displayName": "Development Mode",
       "description": "Build with warnings and debug symbols",
@@ -40,6 +57,12 @@
     }
   ],
   "buildPresets": [
+    {
+      "name": "plugin",
+      "configurePreset": "plugin",
+      "configuration": "RelWithDebInfo",
+      "jobs": 8
+    },
     {
       "name": "dev",
       "configurePreset": "dev",
