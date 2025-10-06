@@ -6,6 +6,7 @@ This adds a CMake preset named `plugin` to `CMakePresets.json` for building Mapl
 
 Update the generator, toolset, and target platform specified in the `plugin` preset to match what your Unreal Engine version is using. You can then build Matplot++ with the command:
 ```bash
+cmake --preset "plugin"
 cmake --build --preset "plugin"
 ```
 and use in Unreal Engine via a [third-party plugin](https://dev.epicgames.com/documentation/en-us/unreal-engine/integrating-third-party-libraries-into-unreal-engine#third-partyplugintemplate).
