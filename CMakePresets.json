@@ -16,8 +16,10 @@
       "toolset": "v143,version=14.33",
       "cacheVariables": {
         "MATPLOTPP_BUILD_EXAMPLES": "OFF",
-        "MATPLOTPP_BUILD_TESTS": "OFF",
-        "BUILD_SHARED_LIBS": "OFF",
+        "MATPLOTPP_BUILD_TESTS": "ON",
+        "MATPLOTPP_BUILD_SKIA_BACKEND": "ON",
+        "BUILD_SHARED_LIBS": "ON",
+        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL",
         "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "OFF",
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION": "10.0.19041.0"

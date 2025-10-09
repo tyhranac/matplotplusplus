@@ -97,6 +97,13 @@ add_library(Matplot++::matplot++ ALIAS matplot)
 target_include_directories(matplot
     PUBLIC $<BUILD_INTERFACE:${MATPLOT_ROOT_DIR}/source>
            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+if (MATPLOTPP_BUILD_SKIA_BACKEND)
+    if (NOT DEFINED SKIA_ROOT)
+        message(FATAL_ERROR "Must set SKIA_ROOT if using Skia backend. Use -DSKIA_ROOT=\"C:\path\to\skia\".")
+    endif()
+    set(SKIA_INCLUDE "${SKIA_ROOT}/include")
+    target_include_directories(matplot PUBLIC "${SKIA_ROOT};${SKIA_INCLUDE}")
+endif()
 
 set_target_properties(matplot PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
 
@@ -186,6 +193,27 @@ endif ()
 #        endif ()
 #    endif ()
 #endif ()
+
+#######################################################
+### Skia backend                                    ###
+#######################################################
+if (MATPLOTPP_BUILD_SKIA_BACKEND)
+    set(SKIA_OUT "${SKIA_ROOT}/out/Shared")
+
+    add_library(skia SHARED IMPORTED)
+    set_target_properties(skia PROPERTIES
+        IMPORTED_IMPLIB "${SKIA_OUT}/skia.lib"
+        INTERFACE_INCLUDE_DIRECTORIES "${SKIA_ROOT};${SKIA_INCLUDE}"
+    )
+
+    add_library(matplot_skia
+        backend/skia.h
+        backend/skia.cpp
+    )
+    target_link_libraries(matplot_skia PUBLIC matplot skia)
+
+    list(APPEND TARGETS matplot_skia)
+endif()
 
 #######################################################
 ### Experimental OpenGL backend                     ###
